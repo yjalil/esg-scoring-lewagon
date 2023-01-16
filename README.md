@@ -11,3 +11,12 @@
 ```git branch --merged master```
 * Delete the branch soit doesn't clutter your git. Don't try to force the delete with -D.
 ```git branch -d <branch-name>```
+
+# Notebooks
+Notebooks will import data. Since we ignore data files, if you need to try someone esle's notebook, you need to copy the data file in the notebook folder. Create a /notebooks/Data subfolder and copy the csv file in it. Don't change another contributor's notebook. 
+
+# Naming variables and classes
+We will use the same convention. Classes start with a capital letter, functions and variables don't. This is important, whenthe project grows weneed to be able to find our way by intuition.
+* PascalCase for classes
+* camelCase for functions
+* snake_case for variables
