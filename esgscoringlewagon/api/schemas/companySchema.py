@@ -1,30 +1,21 @@
-from pydantic import BaseModel, Field
-from datetime import date
-from typing import Optional
-from pydantic import Field, BaseModel
-from esgscoringlewagon.api.schemas.articleSchema import article
-
-class companyBase(BaseModel):
+from pydantic import BaseModel
+from typing import Union, List
+from esgscoringlewagon.api.schemas.articleSchema import Article
+class CompanyBase(BaseModel):
     name : str 
-    description : Optional[str] = None
+    description : Union[str, None] = None
     class Config:
         orm_mode = True
 
 
 
-class companyCreate(companyBase):
+class CompanyCreate(CompanyBase):
     pass
 
-class companyUpdate(BaseModel):
-    name : Optional[str] 
-    description : Optional[str]
-    class Config:
-        orm_mode = True
 
-
-class company(companyBase):
-    id : int
-    articles : article = None
+class Company(CompanyBase):
+    id: int
+    articles: List[Article] = []
     class Config:
         orm_mode = True
     

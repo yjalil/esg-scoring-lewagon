@@ -1,43 +1,30 @@
 from pydantic import BaseModel
-import datetime
-from esgscoringlewagon.api.schemas import companySchema
-from typing import List, Optional
+from datetime import datetime
 
-class articleBase(BaseModel):
-    company_name : str
-    date : datetime.date
-    uploaded_at : datetime.date
-    title : str 
+class ArticleBase(BaseModel):
+    
+    date : datetime
+    title : str
+    uploaded_at : datetime
     body : str 
     sourceURL : str
     topic_category : str
     esg_score : float
-    scored_at :  datetime.date
+    scored_at :  datetime
     exclude_count : int
     class Config:
         orm_mode = True
 
-class articleUpdate(BaseModel):
-    date : Optional[datetime.date]
-    uploaded_at : Optional[datetime.date]
-    title : Optional[str] 
-    body : Optional[str]
-    sourceURL : Optional[str]
-    topic_category : Optional[str]
-    esg_score : Optional[float]
-    scored_at :  Optional[datetime.date]
-    exclude_count : Optional[int]
-    class Config:
-        orm_mode = True
 
 
-class articleCreate(articleBase):
+class ArticleCreate(ArticleBase):
     pass
     class Config:
         orm_mode = True
 
-class article(articleBase):
+class Article(ArticleBase):
     id : int
+    owner_id : int
     class Config:
         orm_mode = True
     
