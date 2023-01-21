@@ -1,12 +1,8 @@
 from fastapi import APIRouter
-from utils.AppRequests import cloneManarEcheanciers, cloneManarTitres
+
 
 router = APIRouter()
 
-@router.get("/fichiers/Titres")
+@router.post('/files/articles')
 def get_Files_From_Excel():
-    cloneManarTitres()
-
-@router.get("/fichiers/Echeanciers")
-def get_Files_From_Excel():
-    cloneManarEcheanciers()
+    pass

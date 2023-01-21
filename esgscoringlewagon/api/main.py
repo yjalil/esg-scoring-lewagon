@@ -33,6 +33,10 @@ app.add_middleware(
 )
 
 # app.include_router(files.router)
+
+@app.get('/')
+def root():
+    return {'message':'API is online'}
 app.include_router(companies.router)
 app.include_router(articles.router)
 

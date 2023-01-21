@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 
-@router.post("/companies/{company_name}/article",response_model=articleSchema.articleCreate)
+@router.post("/companies/{company_name}/article")
 def create_company_article(company_name:str, article: articleSchema.articleCreate, db: Session = Depends(get_db)):
     return articleCRUD.create_company_article(db, company_name, article) 
 
@@ -27,7 +27,7 @@ def change_company_article(company_name : str, article : articleSchema.article, 
     else:
         raise HTTPException(status_company_name=404, detail="This article doesn't exist")
 
-@router.delete("/companies/{company_name}/article",response_model=articleSchema.article)
+@router.delete("/companies/{company_name}/article")
 def destroy_company_article(company_name : str,db : Session=Depends(get_db)):
     db_article = articleCRUD.get_article_by_company_company_name(db,company_name)
     if db_article:

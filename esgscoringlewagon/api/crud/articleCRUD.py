@@ -3,13 +3,14 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
 from esgscoringlewagon.api.models import articleModel
-from esgscoringlewagon.api.schemas import articleSchema
+from esgscoringlewagon.api.schemas import articleSchema, companySchema
 from esgscoringlewagon.api.crud.companyCRUD import get_company_by_name
 
 def create_company_article(db: Session, company_name :str, article: articleSchema.articleCreate):
     isCompany = get_company_by_name(db, company_name)
     if isCompany is None:
-        raise HTTPException(status_code=404, detail="This company doesn't exit")
+        db_company = companySchema.companyCreate
+        create_company(db,company_name)
     db_article = articleModel.Article(company_name = article.company_name,
                                       date = article.date,
                                       uploaded_at = datetime.now(),
