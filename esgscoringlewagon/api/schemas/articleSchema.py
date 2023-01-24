@@ -1,14 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 class ArticleBase(BaseModel):
-    
     date : datetime
-    title : str
+    title : str = Field(..., min_length=3)
     uploaded_at : datetime
-    body : str 
-    sourceURL : str
-    topic_category : str
+    body : str = Field(..., min_length=10)
+    sourceURL : str = Field(..., min_length=3)
+    topic_category : str = Field(..., min_length=3)
     esg_score : float
     scored_at :  datetime
     exclude_count : int

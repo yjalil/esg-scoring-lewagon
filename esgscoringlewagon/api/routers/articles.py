@@ -8,12 +8,12 @@ router = APIRouter()
 
 
 
-@router.get("/articles/", response_model=List[articleSchema.Article]) #
+@router.get("/articles/", response_model=List[articleSchema.Article]) 
 def get_articles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     db_articles =db.query(articleModel.Article).all()
     return db_articles
 
-@router.get("/articles/byCompany/{company_name}", response_model=List[articleSchema.Article]) #
+@router.get("/articles/byCompany/{company_name}", response_model=List[articleSchema.Article]) 
 def get_articles_by_company(company_name: str,db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
     try :
         db_company = db.query(companyModel.Company).filter(companyModel.Company.name == company_name).first()
@@ -41,25 +41,21 @@ def get_article_by_date(articles_date : datetime, db : Session=Depends(get_db)):
                             detail=f"No article found for{articles_date}")
     return db_articles
 
-@router.post("/article/",status_code =201, response_model = articleSchema.ArticleCreate)
+@router.post("/article/add/{company_name}",status_code =201, response_model = articleSchema.Article)
 def create_article(article: articleSchema.ArticleCreate, company_name: str, db: Session = Depends(get_db)):
     db_company = db.query(companyModel.Company).filter(companyModel.Company.name == company_name).first()
+    if not  db_company:
+        raise HTTPException(status_code=404,
+                            detail=f"No company found with the name : {company_name}")
+    
     db_article = articleModel.Article(**article.dict(), owner_id=db_company.id)
     db.add(db_article)
     db.commit()
     db.refresh(db_article)
     return db_article
-    # new_article  = articleModel.Article(**article.dict())
-    # try:
-    #     db.add(new_article)
-    #     db.commit()
-    #     db.refresh(new_article)
-    #     return(new_article)
-    # except:
-    #     raise HTTPException(status_code=409, detail=f"{new_article.title} already exists. Company names must be unique")
 
 
-@router.delete("/article/{article_id}", status_code = 204)
+@router.delete("/article/delete/{article_id}", status_code = 204)
 def delete_article(article_id : int,db : Session=Depends(get_db)):
     db_article_deleteQuery = db.query(articleModel.Article).filter(articleModel.Article.id == article_id)
     db_article = db_article_deleteQuery.first()
