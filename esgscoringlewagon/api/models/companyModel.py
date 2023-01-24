@@ -11,4 +11,4 @@ class Company(Base):
     name = Column(String, nullable=False,unique=True)
     description = Column(String)
     
-    articles = relationship("Article", back_populates="owner")
+    articles = relationship("Article", back_populates="owner",cascade="all,delete-orphan")

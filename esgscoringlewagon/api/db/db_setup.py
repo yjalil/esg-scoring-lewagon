@@ -8,10 +8,7 @@ config = AppConfig()
 
 cnn_str = config.db_extension+':///./'+config.db_name+'.'+config.db_extension
 
-print(cnn_str)
-
 engine = create_engine(cnn_str)
-
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

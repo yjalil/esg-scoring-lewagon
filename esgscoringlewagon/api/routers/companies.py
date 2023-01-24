@@ -21,7 +21,7 @@ def get_company_by_name(company_name : str, db : Session=Depends(get_db)):
                             detail=f"The company named: {company_name} does not exist")
     return db_company
 
-@router.post("/companies/",status_code =201, response_model = companySchema.Company)
+@router.post("/company/add/",status_code =201, response_model = companySchema.Company)
 def create_company(company: companySchema.CompanyCreate, db: Session = Depends(get_db)):
     new_company  = companyModel.Company(**company.dict())
     try:
@@ -34,7 +34,7 @@ def create_company(company: companySchema.CompanyCreate, db: Session = Depends(g
 
 
 
-@router.patch("/companies/{company_name}",response_model = companySchema.Company)
+@router.put("/company/update/{company_name}",response_model = companySchema.Company)
 def update_company(company_name : str, updated_company: companySchema.CompanyCreate,db : Session=Depends(get_db)):
     db_company_updateQuery = db.query(companyModel.Company).filter(companyModel.Company.name == company_name)
     db_company = db_company_updateQuery.first()
@@ -46,7 +46,7 @@ def update_company(company_name : str, updated_company: companySchema.CompanyCre
     return db.query(companyModel.Company).filter(companyModel.Company.name == updated_company.name).first()
         
 
-@router.delete("/companies/{company_name}", status_code = 204)
+@router.delete("/company/delete/{company_name}", status_code = 204)
 def delete_company(company_name : str,db : Session=Depends(get_db)):
     db_company_deleteQuery = db.query(companyModel.Company).filter(companyModel.Company.name == company_name)
     db_company = db_company_deleteQuery.first()

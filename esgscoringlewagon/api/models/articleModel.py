@@ -10,14 +10,16 @@ class Article(Base):
     id = Column(Integer, primary_key=True)
     date = Column(DateTime,nullable=False)
     uploaded_at = Column(TIMESTAMP(timezone=True),nullable=False)
-    title = Column(String)
-    body = Column(String)
-    sourceURL = Column(String)
+    title = Column(String,unique=True,nullable=False)
+    body = Column(String,unique=True,nullable=False)
+    sourceURL = Column(String,unique=True)
     topic_category = Column(String)
     esg_score = Column(Float)
     scored_at = Column(DateTime)
     exclude_count = Column(Integer)
     
-    owner_id = Column(Integer, ForeignKey("companies.id"))
+    owner_id = Column(Integer, ForeignKey("companies.id",ondelete='CASCADE'))
     owner = relationship("Company",back_populates="articles")
+    
+    
     
