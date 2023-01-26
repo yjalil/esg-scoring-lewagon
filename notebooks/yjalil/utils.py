@@ -1,10 +1,16 @@
 import string
 from unidecode import unidecode
-from sklearn.base import BaseEstimator,TransformerMixin
+from sklearn.base import BaseEstimator,TransformerMixin, ClassifierMixin
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 from nltk.tokenize import word_tokenize
+
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.linear_model import SGDClassifier, LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+
 
 class CustomPreprocessor(BaseEstimator,TransformerMixin):
     ''' Preprocessor with multiple options for gridSearchCv
@@ -17,7 +23,7 @@ class CustomPreprocessor(BaseEstimator,TransformerMixin):
     - lemma: {True, False}. Choose to lemmatize or not. Default=False.
     - stem: {True, False}. Choose to stem or not. Default=False.
     '''
-    def __init__(self,remove_stopwords=True,negation = 'keep',numbers='keep',punctuation='remove',accents='keep', html='keep',lemma=False, stem=False):
+    def __init__(self,remove_stopwords=True,negation = 'keep',numbers='remove',punctuation='remove',accents='keep', html='keep',lemma=False, stem=True):
         
         self.negation_list = ['no','not']
         self.remove_stopwords = remove_stopwords
@@ -65,3 +71,43 @@ class CustomPreprocessor(BaseEstimator,TransformerMixin):
             X['sentence'] = X['sentence'].apply(lambda x: unidecode(x))
             
         return X['sentence'].values
+
+class ModelSelector(BaseEstimator,ClassifierMixin):
+    '''
+    Choose a model from these predefined strings :
+    - 'NB' : Multinomial Naive Bayes. Default='NB'
+    - 'SVM' : Support Vector Machine
+    - 'RF' : Random Forest
+    - 'DT' : Decision Tree
+    - 'Reg' : Ridge classifier
+    '''
+    def __init__(self,model='NB') -> None:
+        self.model = model
+        self.estimator = None
+           
+    
+    def fit(self, X, y):
+        if self.model == 'NB':
+            self.estimator= MultinomialNB()
+            
+        if self.model == 'SVM':
+            self.estimator= SGDClassifier()
+            
+        if self.model == 'RF':
+            self.estimator= RandomForestClassifier()
+            
+        if self.model == 'DT':
+            self.estimator= DecisionTreeClassifier()
+        
+        if self.model == 'Reg':
+            self.estimator= LogisticRegression()
+    
+        return self.estimator.fit(X, y)
+
+    def predict(self, X):
+        return self.estimator.predict(X)
+
+    def classes_(self):
+        if self.estimator:
+            return self.estimator.classes_
+
