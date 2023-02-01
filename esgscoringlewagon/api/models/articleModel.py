@@ -12,7 +12,7 @@ class Article(Base):
     uploaded_at = Column(TIMESTAMP(timezone=True),nullable=False)
     title = Column(String,unique=True,nullable=False)
     body = Column(String,unique=True,nullable=False)
-    sourceURL = Column(String,unique=True)
+    sourceURL = Column(String)
     topic_category = Column(String)
     esg_score = Column(Float)
     scored_at = Column(DateTime)
