@@ -7,6 +7,10 @@ class CompanyBase(BaseModel):
     class Config:
         orm_mode = True
 
+class CompanyName(BaseModel):
+    name : str = Field(..., min_length=1)
+    class Config:
+        orm_mode = True
 
 
 class CompanyCreate(CompanyBase):

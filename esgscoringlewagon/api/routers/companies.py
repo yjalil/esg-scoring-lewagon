@@ -7,7 +7,7 @@ from typing import List
 
 router = APIRouter()
 
-@router.get("/companies/", response_model=List[companySchema.Company]) #
+@router.get("/companies/", response_model=List[companySchema.CompanyName]) #
 def get_companies(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     db_companies =db.query(companyModel.Company).all()
     return db_companies
