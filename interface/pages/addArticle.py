@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
-
+import numpy as np
+import pandas as pd
 
 st.set_page_config(
     page_title="Add an article",
@@ -44,14 +45,21 @@ company = st.text_input('Company name')
 source = st.text_input('Article source')
 
 if st.button('Send to database'):
-    response = requests.post("/article/add/test_company_articles_1",json={
+    process_date = np.datetime64('now')
+    company_response_get = requests.get(f"http://127.0.0.1:8000/companies/{company}")
+    if company_response_get.status_code == 404:
+        company_response = requests.post("http://127.0.0.1:8000/company/add/",json={'name':company,
+                                                                                'description':'No description provided'})
+
+    model_response = requests.post("http://127.0.0.1:8000/article/predict/",json={'body':body})
+    response = requests.post(f"http://127.0.0.1:8000/article/add/{company}",json={
         "date": date,
         "title": title,
-        "uploaded_at": "2023-01-23T13:24:37.843Z",
-        "body": "string with more than 10 characters",
-        "sourceURL": "WWW.string.com/stroyURL",
-        "topic_category": "TES",
-        "esg_score": 0,
-        "scored_at": "2023-01-23T13:24:37.843Z",
+        "uploaded_at": pd.to_datetime(str(process_date)).strftime('%Y-%m-%d'),
+        "body": body,
+        "sourceURL": source,
+        "topic_category": model_response.json()['topic_category'],
+        "esg_score": model_response.json()['esg_score'],
+        "scored_at": pd.to_datetime(str(process_date)).strftime('%Y-%m-%d'),
         "exclude_count": 0
     })

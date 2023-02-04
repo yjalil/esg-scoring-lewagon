@@ -31,7 +31,7 @@ def get_articles_by_company_period(company_name: str, start_date:str, end_date:s
         db_company = db.query(companyModel.Company).filter(companyModel.Company.name == company_name).first()
         db_articles =db_company.articles
         
-        return [article for article in db_articles if article.date >= datetime.strptime(start_date, '%Y-%m-%d') and article.date <= datetime.strptime(end_date, '%Y-%m-%d')]
+        return [article for article in db_articles if datetime.strptime(article.date, '%Y-%m-%d') >= datetime.strptime(start_date, '%Y-%m-%d') and datetime.strptime(article.date, '%Y-%m-%d') <= datetime.strptime(end_date, '%Y-%m-%d')]
     # except :
     #     raise HTTPException(status_code=404,
     #                         detail=f"Company {company_name} does not exist")
