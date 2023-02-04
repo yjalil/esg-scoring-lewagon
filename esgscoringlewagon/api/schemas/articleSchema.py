@@ -2,14 +2,14 @@ from pydantic import BaseModel, Field
 from datetime import datetime
 
 class ArticleBase(BaseModel):
-    date : datetime
+    date : str
     title : str = Field(..., min_length=3)
-    uploaded_at : datetime
+    uploaded_at : str
     body : str = Field(..., min_length=10)
     sourceURL : str = Field(..., min_length=3)
     topic_category : str = Field(..., min_length=3)
     esg_score : float
-    scored_at :  datetime
+    scored_at :  str
     exclude_count : int
     class Config:
         orm_mode = True
@@ -26,7 +26,7 @@ class ArticlePredictOut(BaseModel):
         orm_mode = True
 
 class ArticleDetail(BaseModel):
-    date : datetime
+    date : str
     title : str = Field(..., min_length=3)
     body : str = Field(..., min_length=10)
     sourceURL : str = Field(..., min_length=3)
@@ -36,7 +36,7 @@ class ArticleDetail(BaseModel):
         orm_mode = True
 
 class ArticleGraph(BaseModel):
-    date : datetime
+    date : str
     topic_category : str = Field(..., min_length=3)
     esg_score : float
     class Config:

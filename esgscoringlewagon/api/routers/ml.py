@@ -16,7 +16,6 @@ def predict_article(article: articleSchema.ArticlePredictIn, db: Session = Depen
     sentiment_model = SentimentIntensityAnalyzer()
     text = [BodyPreprocessor().fit_transform(article.body)]
     topic_prediction = topic_model.predict(text)
-    print(topic_prediction)
     sentiment_prediction = sentiment_model.polarity_scores(text)['compound']
     output = articleSchema.ArticlePredictOut(
         topic_category = topic_prediction[0],
