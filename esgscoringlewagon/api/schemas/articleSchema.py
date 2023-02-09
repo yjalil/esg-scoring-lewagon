@@ -14,6 +14,13 @@ class ArticleBase(BaseModel):
     class Config:
         orm_mode = True
 
+class ArticleFlag(BaseModel):
+    id : int
+    exclude_count : int
+    class Config:
+        orm_mode = True
+
+
 class ArticlePredictIn(BaseModel):
     body : str = Field(..., min_length=10)
     class Config:
@@ -26,9 +33,9 @@ class ArticlePredictOut(BaseModel):
         orm_mode = True
 
 class ArticleDetail(BaseModel):
+    id : int
     date : str
     title : str = Field(..., min_length=3)
-    body : str = Field(..., min_length=10)
     sourceURL : str = Field(..., min_length=3)
     topic_category : str = Field(..., min_length=3)
     esg_score : float

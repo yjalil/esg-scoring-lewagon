@@ -37,6 +37,18 @@ def get_articles_by_company_period(company_name: str, start_date:str, end_date:s
     #                         detail=f"Company {company_name} does not exist")
 
 
+@router.get("/articles/byCompany/detailed/{company_name}/Period/{start_date}/{end_date}", response_model=List[articleSchema.ArticleDetail]) 
+def get_articles_detailed_by_company_period(company_name: str, start_date:str, end_date:str,db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
+    
+        db_company = db.query(companyModel.Company).filter(companyModel.Company.name == company_name).first()
+        db_articles =db_company.articles
+        
+        return [article for article in db_articles if datetime.strptime(article.date, '%Y-%m-%d') >= datetime.strptime(start_date, '%Y-%m-%d') and datetime.strptime(article.date, '%Y-%m-%d') <= datetime.strptime(end_date, '%Y-%m-%d')]
+    # except :
+    #     raise HTTPException(status_code=404,
+    #                         detail=f"Company {company_name} does not exist")
+
+
 @router.get("/article/byId/{article_id}",response_model=articleSchema.Article)
 def get_article_by_id(article_id : int, db : Session=Depends(get_db)):
     db_article = db.query(articleModel.Article).filter(articleModel.Article.id == article_id).first()
@@ -70,6 +82,17 @@ def create_article(article: articleSchema.ArticleCreate, company_name: str, db: 
         db.rollback()
         raise HTTPException(status_code=409,
                             detail=f"Article title or body fields already exist")
+
+@router.patch("/article/flag/{article_id}",response_model=articleSchema.ArticleFlag)
+def flag_article_by_id(article_id : int, db : Session=Depends(get_db)):
+    db_article = db.query(articleModel.Article).filter(articleModel.Article.id == article_id).first()
+    if not db_article:
+        raise HTTPException(status_code=404,
+                            detail=f"The article does not exist")
+    db_article.exclude_count = db_article.exclude_count + 1
+    db.commit()
+    db.refresh(db_article)
+    return db_article
 
 
 @router.delete("/article/delete/{article_id}", status_code = 204)
