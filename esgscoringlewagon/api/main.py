@@ -1,7 +1,7 @@
 from esgscoringlewagon.api.routers import articles, companies
 from fastapi import FastAPI
 from esgscoringlewagon.api.db.db_setup import Base, SessionLocal, engine
-from esgscoringlewagon.api.routers import articles, companies
+from esgscoringlewagon.api.routers import articles, companies, ml
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
@@ -39,5 +39,6 @@ def root():
     return {'message':'API is online'}
 app.include_router(companies.router)
 app.include_router(articles.router)
+app.include_router(ml.router)
 
 

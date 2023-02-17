@@ -8,14 +8,14 @@ class Article(Base):
     __tablename__ = "articles"
 
     id = Column(Integer, primary_key=True)
-    date = Column(DateTime,nullable=False)
-    uploaded_at = Column(TIMESTAMP(timezone=True),nullable=False)
+    date = Column(String,nullable=False)
+    uploaded_at = Column(String,nullable=False)
     title = Column(String,unique=True,nullable=False)
     body = Column(String,unique=True,nullable=False)
-    sourceURL = Column(String,unique=True)
+    sourceURL = Column(String)
     topic_category = Column(String)
     esg_score = Column(Float)
-    scored_at = Column(DateTime)
+    scored_at = Column(String)
     exclude_count = Column(Integer)
     
     owner_id = Column(Integer, ForeignKey("companies.id",ondelete='CASCADE'))

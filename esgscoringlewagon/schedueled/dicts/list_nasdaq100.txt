@@ -1,0 +1,101 @@
+Apple
+Microsoft
+Amazon
+NVIDIA
+Alphabet
+Alphabet
+Tesla
+Meta Platforms
+Broadcom
+PepsiCo
+Costco Wholesale
+Cisco Systems
+T-Mobile
+Adobe
+Comcast
+Texas Instruments
+Netflix
+QUALCOMM
+Advanced Micro Devices
+Honeywell International
+Amgen
+Intel
+Starbucks
+Intuit
+Gilead Sciences
+Applied Materials
+PayPal Holdings
+Booking Holdings
+Automatic Data Processing
+Analog Devices
+Mondelez International
+Intuitive Surgical
+Regeneron Pharmaceuticals
+Vertex Pharmaceuticals
+Lam Research
+Micron Technology
+CSX
+Fiserv
+Moderna
+Charter Communications
+ASML Holding NV
+MercadoLibre
+Activision Blizzard
+KLA
+Synopsys
+Marriott International
+Monster Beverage
+Cadence Design Systems
+Keurig Dr Pepper
+O'Reilly Automotive
+NXP Semiconductors
+Palo Alto Networks
+Autodesk
+Kraft Heinz
+American Electric Power
+Airbnb
+Microchip Technology
+Cintas
+Pinduoduo
+Paychex
+Dexcom
+Fortinet
+Old Dominion Freight Line
+Biogen
+Exelon
+Ross Stores
+IDEXX Laboratories
+Marvell Technology
+Lululemon Athletica
+AstraZeneca
+PACCAR
+Workday
+Warner Bros Discovery
+Xcel Energy
+Cognizant Technology Solutions
+GLOBALFOUNDRIES
+Illumina
+Dollar Tree
+Copart
+Walgreens Boots Alliance
+Electronic Arts
+Baker Hughes Co
+CoStar Group
+Fastenal Co
+Enphase Energy
+Verisk Analytics
+JD.com ADR
+eBay
+Constellation Energy
+Align Technology
+Seagen
+Atlassian
+Crowdstrike Holdings
+Diamondback Energy
+ANSYS
+Datadog
+Sirius XM Holdings
+Zoom Video Communications
+Lucid Group
+Zscaler
+Rivian Automotive

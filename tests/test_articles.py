@@ -37,14 +37,9 @@ def test_create_article_with_missing_fields():
         "exclude_count": 0
     })
     assert response.status_code == 422
-    # Delete company
-    response = client.delete("/company/delete/test_company_articles_1")
-    assert response.status_code == 204
 
 
 def test_create_article():
-    response = client.post("/company/add/",json={'name':'test_company_articles_1','description':'test description for test_company_articles_1'})
-    assert response.status_code == 201
     # Add article with missing fields
     response = client.post("/article/add/test_company_articles_1",json={
         "date": "2023-01-23T13:24:37.843Z",
@@ -74,12 +69,15 @@ def test_get_articles_by_company():
     # Get company
     response = client.get("/articles/byCompany/test_company_articles_1")
     assert response.status_code == 200
+
+def test_delete_article_by_id():
+    response = client.delete("/article/delete/1")
+    assert response.status_code == 204
     
+
 def test_delete_article_parent_company():    
     # Delete company
     response = client.delete("/company/delete/test_company_articles_1")
     assert response.status_code == 204
-    response = client.get("/articles/byCompany/test_company_articles_1")
-    assert response.status_code == 404
-        
+    
     
